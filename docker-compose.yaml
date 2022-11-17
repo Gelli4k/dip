@@ -1,13 +1,13 @@
-version: '3.8'
+version: '3.9'
 
 services:
   main_todolist_db:
-    image: postgres:12.4-alpine
+    image: postgres
     volumes:
       - todolist_postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=todolist
