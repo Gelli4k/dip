@@ -1,15 +1,62 @@
 version: '3.9'
 
 services:
-  main_todolist_db:
-    image: postgres
-    volumes:
-      - todolist_postgres_data:/var/lib/postgresql/data
+  frontend:
+    image: sermalenk/skypro-front:lesson-34
+    restart: always
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+  migrations:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    command: >
+      sh -c "python ./manage.py migrate"
+  db:
+    env_file:
+      - .env
+    image: postgres:latest
+    container_name: db-1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    restart: always
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=todolist
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    healthcheck:
+      #test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      test: ["CMD-SHELL", "pg_isready", "-d", "${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
 volumes:
-  todolist_postgres_data:
+  data:
+    external: true
+    name: ./docker/postgres
+
+
+
