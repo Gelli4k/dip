@@ -45,8 +45,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          source: 'dip_ci/docker-compose.yaml,dip_ci/.env'
-          target: 'dip_ci'
+          source: "dip_ci/docker-compose.yaml,dip_ci/.env"
+          target: "dip_ci"
           strip_components: 1
       - name: deploy app
         uses: appleboy/ssh-action@master
