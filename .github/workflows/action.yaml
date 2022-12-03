@@ -1,0 +1,13 @@
+name: Build and deploy workflow
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone code
+        uses: actions/checkout@v2
+     # - name: docker build
+       # run: docker build -t gelli4ka/dip:$GITHUB_REF_NAME-$GITHUB_RUN_ID .
