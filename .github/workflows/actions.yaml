@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v2
       - name: render configs
         run: |
-          mkdir deploy
+          mkdir dip_ci
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
           cat .env-ci | envsubst > deploy/.env
       - name: copy files to server
@@ -55,7 +55,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            mkdir dip_ci
             cd dip_ci
             echo ${{ secrets.PASSWORD }} | sudo -S docker-compose down
             echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d
