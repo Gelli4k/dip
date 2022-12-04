@@ -7,7 +7,7 @@ services:
     depends_on:
       - api
     ports:
-      - "80:80"
+      - '80:80'
   api:
     image: gelli4ka/dip:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     restart: always
@@ -25,7 +25,7 @@ services:
       migrations:
         condition: service_completed_successfully
     ports:
-      - "8000:8000"
+      - '8000:8000'
   migrations:
     image: gelli4ka/dip:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     depends_on:
@@ -49,7 +49,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - ./pg_data:/var/lib/postgresql/data
     healthcheck:
