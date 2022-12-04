@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - .env
+      - .env_docker
     depends_on:
       db:
         condition: service_healthy
@@ -28,12 +28,12 @@ services:
       db:
         condition: service_healthy
     env_file:
-      - .env
+      - .env_docker
     command: >
       sh -c "python ./manage.py migrate"
   db:
     env_file:
-      - .env
+      - .env_docker
     image: postgres:14
     container_name: db-1
     environment:
