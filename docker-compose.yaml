@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   frontend:
-    image: sermalenk/skypro-front:lesson-34
+    image: sermalenk/skypro-front:lesson-35
     restart: always
     depends_on:
       - api
@@ -14,7 +14,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - .env_docker
+      - .env
     depends_on:
       db:
         condition: service_healthy
