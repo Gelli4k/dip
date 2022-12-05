@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   frontend:
-    image: sermalenk/skypro-front:lesson-35
+    image: sermalenk/skypro-front:lesson-34
     restart: always
     depends_on:
       - api
@@ -40,7 +40,7 @@ services:
       SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
       SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
     command: >
-      sh -c "python ./manage.py migrate"
+      sh -c "python ./todolist/manage.py migrate"
   db:
     image: postgres:14
     environment:
@@ -51,7 +51,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
+      - ./docker/postgres:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -60,4 +60,6 @@ services:
 
 
 volumes:
-  pg_data:
+  data:
+    external: true
+    name: ./docker/postgres
