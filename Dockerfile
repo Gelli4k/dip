@@ -8,7 +8,7 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY 111/ .
+COPY ..
 
 EXPOSE 8000
 
