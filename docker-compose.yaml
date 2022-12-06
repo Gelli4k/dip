@@ -1,4 +1,4 @@
-version: '3.10'
+version: '3.9'
 
 services:
   frontend:
@@ -30,7 +30,7 @@ services:
     env_file:
       - .env
     command: >
-      sh -c "python ./todolist/manage.py migrate"
+      sh -c "python manage.py migrate"
   db:
     env_file:
       - .env
