@@ -19,9 +19,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('core/', include('core.urls'), name='core'),
-    # path('goals/', include('goals.urls'), name='goals'),
+    path('goals/', include('goals.urls'), name='goals'),
 
     path('oauth/', include('social_django.urls', namespace='social')),
+
 
     # path('docs/schema/', SpectacularAPIView.as_view(), name='schema'),
     # path('docs/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

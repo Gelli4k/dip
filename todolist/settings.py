@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     # user-defined apps
     'core',
-    # 'goals',
+    'goals',
 
     # this-party apps
     'corsheaders',
