@@ -5,7 +5,6 @@ from goals.models.mixin import DatesModelMixin
 
 
 class GoalCategory(DatesModelMixin):
-
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
@@ -15,7 +14,6 @@ class GoalCategory(DatesModelMixin):
         verbose_name='Доска',
         on_delete=models.PROTECT,
         related_name='categories',
-        null=True,
     )
     title = models.CharField(
         verbose_name='Название',
