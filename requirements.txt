@@ -10,3 +10,4 @@ environ~=1.0
 marshmallow_dataclass~=8.5.10
 requests~=2.28.1
 marshmallow~=3.19.0
+drf_spectacular~=0.25.1
