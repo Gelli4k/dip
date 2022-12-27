@@ -10,7 +10,6 @@ class TgUser(models.Model):
     user = models.ForeignKey('core.User', null=True, on_delete=models.CASCADE)
     verification_code = models.CharField(max_length=10, unique=True)
 
-
     def generate_verification_code(self) -> str:
         code = get_random_string(10)
         self.verification_code = code

@@ -30,6 +30,21 @@ services:
       - .env
     command: >
       sh -c "python manage.py migrate"
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    command: >
+      sh -c "python manage.py runbot"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+
   db:
     env_file:
       - .env
@@ -46,7 +61,7 @@ services:
       - ./docker/postgres:/var/lib/postgresql/data
     healthcheck:
       #test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 5s
       timeout: 5s
       retries: 5
