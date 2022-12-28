@@ -86,6 +86,10 @@ class Command(BaseCommand):
         )
 
     def handle_message(self, msg: Message):
+        self.tg_client.send_message(
+            chat_id=msg.chat.id,
+            text='LALALA'
+        )
         return False
         tg_user, created = TgUser.objects.get_or_create(
             tg_user_ud=msg.message_from.id,
