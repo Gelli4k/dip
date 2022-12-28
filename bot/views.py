@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from bot.models import TgUser
 from bot.serializers import TgUserSerializer
 from bot.tg.client import TgClient
+from todolist.settings import TG_BOT_API_TOKEN
 
 
 class BotVerifyView(generics.UpdateAPIView):
@@ -16,7 +17,7 @@ class BotVerifyView(generics.UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         data = self.serializer_class(request.data).data
-        tg_client = TgClient('5806733281:AAGBZWpPnL-qRs8OTY7dyx0Xz3J_cwsJJYg')
+        tg_client = TgClient(TG_BOT_API_TOKEN)
         tg_user = TgUser.objects.filter(verification_code=data['verification_code']).first()
         if not tg_user:
             return Response(status=status.HTTP_400_BAD_REQUEST)

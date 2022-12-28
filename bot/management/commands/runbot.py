@@ -18,10 +18,10 @@ class Command(BaseCommand):
             board__participants__user=tg_user.user,
             is_deleted=False,
         )
-        goals_categories_str = '/n'.join(['- ' + goal.title for goal in goal_categories])
+        goals_categories_str = '/n'.join([str(goal.id) + '- ' + goal.title for goal in goal_categories])
         self.tg_client.send_message(
             chat_id=msg.chat.id,
-            text=f'Выберите категорию:\n {goals_categories_str}'
+            text=f'Выберите категорию (укажите номер):\n {goals_categories_str}'
         )
         is_running = True
 
@@ -30,7 +30,8 @@ class Command(BaseCommand):
             for item in res.result:
                 self.offset = item.update_id + 1
                 if hasattr(item, 'message'):
-                    category = goal_categories.filter(title=msg.text)
+                    print(msg.text)
+                    category = goal_categories.filter(id=int(msg.text))
                     if category:
                         self.create_goal(msg, tg_user, category)
                         is_running = False
@@ -43,7 +44,7 @@ class Command(BaseCommand):
                     else:
                         self.tg_client.send_message(
                             chat_id=msg.chat.id,
-                            text=f'Категория с названием {msg.text} не существует'
+                            text=f'Категория с номером {msg.text} не существует'
                         )
                         is_running = False
 
@@ -85,19 +86,23 @@ class Command(BaseCommand):
         )
 
     def handle_message(self, msg: Message):
+        return False
         tg_user, created = TgUser.objects.get_or_create(
             tg_user_ud=msg.message_from.id,
             tg_chat_id=msg.chat.id
         )
 
-        if created:
+        if created or not tg_user.user:
             tg_user.generate_verification_code()
             self.tg_client.send_message(
                 chat_id=msg.chat.id,
                 text=f"Подтвердите пожалуйста свой аккаунт."
                      f"Для подтверждения необходимо ввести код:{tg_user.verification_code} на сайте"
             )
-        if msg.text == '/goals':
+        elif msg.text == '/whoami':
+            self.tg_client.send_message(chat_id=msg.chat.id, text=f'Вы: {tg_user.user.first_name} '
+                                                                  f'{tg_user.user.last_name}, id: {tg_user.user.id}')
+        elif msg.text == '/goals':
             self.get_goals(msg, tg_user)
         elif msg.text == '/create':
             self.choose_category(msg, tg_user)
