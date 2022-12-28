@@ -30,12 +30,14 @@ class Command(BaseCommand):
             for item in res.result:
                 self.offset = item.update_id + 1
                 if hasattr(item, 'message'):
-                    print(msg.text)
-                    category = goal_categories.filter(id=int(msg.text))
+                    print(item.message)
+                    #return True
+                    category = goal_categories.filter(id=int(item.message.text)).first()
+                    print(category)
                     if category:
-                        self.create_goal(msg, tg_user, category)
+                        self.create_goal(item.message, tg_user, category)
                         is_running = False
-                    elif msg.text == '/cancel':
+                    elif item.message.text == '/cancel':
                         self.tg_client.send_message(
                             chat_id=msg.chat.id,
                             text=f'Операция отменена'
@@ -44,7 +46,7 @@ class Command(BaseCommand):
                     else:
                         self.tg_client.send_message(
                             chat_id=msg.chat.id,
-                            text=f'Категория с номером {msg.text} не существует'
+                            text=f'Категория с номером {item.message.text} не существует'
                         )
                         is_running = False
 
@@ -86,11 +88,11 @@ class Command(BaseCommand):
         )
 
     def handle_message(self, msg: Message):
-        self.tg_client.send_message(
-            chat_id=msg.chat.id,
-            text='LALALA'
-        )
-        return False
+        # self.tg_client.send_message(
+        #     chat_id=msg.chat.id,
+        #     text='AZAZA112221'
+        # )
+        # return False
         tg_user, created = TgUser.objects.get_or_create(
             tg_user_ud=msg.message_from.id,
             tg_chat_id=msg.chat.id

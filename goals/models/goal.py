@@ -39,7 +39,8 @@ class Goal(DatesModelMixin):
         default=Priority.medium
     )
     due_date = models.DateField(
-        verbose_name='Дата выполнения'
+        verbose_name='Дата выполнения',
+        null=True
     )
     user = models.ForeignKey(
         'core.User',
