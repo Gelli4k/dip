@@ -10,10 +10,7 @@ from goals.views.filters import GoalDateFilter
 
 class GoalCreateView(generics.CreateAPIView):
     model = Goal
-    permission_classes = [
-        permissions.IsAuthenticated,
-        GoalPermissions
-    ]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCreateSerializer
 
 

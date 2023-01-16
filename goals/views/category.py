@@ -7,6 +7,7 @@ from goals.serislizers.category import GoalCategoryCreateSerializer, GoalCategor
 
 
 class GoalCategoryCreateView(generics.CreateAPIView):
+    """ Создание категории для цели"""
     model = GoalCategory
     permission_classes = [
         permissions.IsAuthenticated,
