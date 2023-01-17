@@ -30,7 +30,7 @@ def category(board, test_user):
 
 
 @pytest.fixture
-def board(category, test_user):
+def board():
     return factories.BoardFactory.create()
 
 

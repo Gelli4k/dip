@@ -23,10 +23,10 @@ class BoardFactory(factory.django.DjangoModelFactory):
 
     title = factory.Faker('name')
 
+
 class BoardParticipantFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = BoardParticipant
-
 
 
 class GoalCategoryFactory(factory.django.DjangoModelFactory):
@@ -34,7 +34,3 @@ class GoalCategoryFactory(factory.django.DjangoModelFactory):
         model = GoalCategory
 
     title = factory.Faker('name')
-
-
-
-
